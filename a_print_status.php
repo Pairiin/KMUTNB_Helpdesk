@@ -1,78 +1,94 @@
 <?php
-	require_once "mpdf/mpdf.php";
-	ob_start();
   session_start();
+	ob_start();
+
+	require_once "mpdf/mpdf.php";
 	include_once "connect.php";
+	include "function.php";
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<? function dateFormatDB($date){
-    $dateArr = explode("/",$date);
-    return ($dateArr[2]-543)."-".$dateArr[1]."-".$dateArr[0];
-  } ?>
-  <?php
-  function dateToBE($date){
-    list($y,$m,$d)=explode('-',$date);
-    if($y!=""){
-     $y += 543;
-     return ($d.'/'.$m.'/'.$y);
-   }else {
-     return ("");
-   }
-  }
-  ?>
-  <?
-  $date_start=dateFormatDB($_REQUEST['date_start']);
-  $date_end=dateFormatDB($_REQUEST['date_end']);
-  $id_device_type=$_REQUEST['id_device_type']; ?>
+<html>
 <head>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
 </head>
 <body>
-  <center><strong><h3><?php echo "รายงานสรุปการซ่อมตามสถานะอุปกรณ์";?></h3></strong></center>
-<table width="100%" border="" class="table table-bordered table-striped table-hover table-condensed">
-  <tr>
-    <td width="20%" height="32" align="center"><strong>ข้อมูลระหว่างวันที่ :  </strong>
-     <? echo $_GET[date_start] ."  ถึง  ". $_GET[date_end] ?></td>
-    </tr>
-  </table>
-  <table width="100%" border="1" class="table table-bordered table-striped table-hover table-condensed">
-    <tr bgcolor="#84cdce">
-      <td width="7%" height="32" align="center"><strong>ลำดับ</strong></td>
-      <td width="7%" height="32" align="center"><strong>รหัสการซ่อม</strong></td>
-      <td width="7%" height="32" align="center"><strong>ชื่อผู้แจ้ง</strong></td>
-      <td width="7%" height="32" align="center"><strong>วันที่แจ้งซ่อม</strong></td>
-      <td width="15%" height="32" align="center"><strong>ชื่ออุปกรณ์</strong></td>
-      <td width="25%" height="32" align="center"><strong>ปัญหา</strong></td>
-      <td width="7%" height="32" align="center"><strong>ประเภทอุปกรณ์</strong></td>
-      <td width="7%" height="32" align="center"><strong>สถานะการซ่อม</strong></td>
-    </tr>
+<div class=Section2>
 
+<table width="704" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="291" align="center"><h3>รายงานสรุปการซ่อมตามสถานะอุปกรณ์</h3></td>
+  </tr>
+  <tr>
+    <td height="27" align="center"><span class="style2"><strong>ข้อมูลระหว่างวันที่ :  </strong> <?=$_GET[date_start]?> ถึง <?=$_GET[date_end]?></span></td>
+  </tr>
+  <tr>
+    <td height="25" align="center"><span class="style2">สำนักคอมพิวเตอร์ มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ วิทยาเขตปราจีนบุรี</span></td>
+  </tr>
+</table>
+
+<br>
+<?
+$date_start=dateFormatDB($_REQUEST['date_start']);
+$date_end=dateFormatDB($_REQUEST['date_end']);
+$id_problem_type=$_REQUEST['id_problem_type']; ?>
+
+<table bordercolor="#424242" width="100%" height="100%" border="1"  align="center" cellpadding="0" cellspacing="0" class="style3">
+  <tr bgcolor="#84cdce">
+		<td width="7%" height="40" align="center"><strong>ลำดับ</strong></td>
+		<td width="7%" height="32" align="center"><strong>รหัสการซ่อม</strong></td>
+		<td width="7%" height="32" align="center"><strong>ชื่อผู้แจ้ง</strong></td>
+		<td width="7%" height="32" align="center"><strong>วันที่แจ้งซ่อม</strong></td>
+		<td width="15%" height="32" align="center"><strong>ชื่ออุปกรณ์</strong></td>
+		<td width="25%" height="32" align="center"><strong>ปัญหา</strong></td>
+		<td width="7%" height="32" align="center"><strong>ประเภทอุปกรณ์</strong></td>
+		<td width="7%" height="32" align="center"><strong>สถานะการซ่อม</strong></td>
+  </tr>
+
+
+  <tr>
     <?php
-    $sql="SELECT * FROM REPAIR INNER JOIN detail_repair ON repair.id_repair = detail_repair.id_repair INNER JOIN status ON detail_repair.id_status=status.id_status INNER JOIN device ON detail_repair.id_device = device.id_device INNER JOIN device_type ON device.id_device_type=device_type.id_device_type WHERE date_s BETWEEN '$date_start' AND '$date_end' AND detail_repair.id_status='$id_status'";
+		$sql="SELECT * FROM REPAIR
+					INNER JOIN detail_repair ON repair.id_repair = detail_repair.id_repair
+					INNER JOIN status ON detail_repair.id_status=status.id_status
+					INNER JOIN device ON detail_repair.id_device = device.id_device
+					INNER JOIN device_type ON device.id_device_type=device_type.id_device_type
+					WHERE date_s BETWEEN '$date_start' AND '$date_end' AND detail_repair.id_status='$_REQUEST[id_status]'";
     $result = mysql_query($sql);
     $i = 1;
     while($objResult =mysql_fetch_array($result)){;
      ?>
       <tr>
-      <td align="center"><?php echo $i; ?></td>
-      <td align="center"><?php echo $objResult[id_repair]; ?></td>
-      <td align="center"><?php echo $objResult[user_name]; ?></td>
-      <td align="center"><?php echo dateToBE($objResult[date_s]); ?></td>
-      <td align="center"><?php echo $objResult[device_name]; ?></td>
-      <td align="center"><?php echo $objResult[problem]; ?></td>
-      <td align="center"><?php echo $objResult[device_type_name]; ?></td>
-      <td align="center"><?php echo $objResult[status_name]; ?></td>
+				<td height="35" align="center"><?php echo $i; ?></td>
+	      <td align="center"><?php echo $objResult[id_detail]; ?></td>
+	      <td align="center"><?php echo $objResult[user_display]; ?></td>
+	      <td align="center"><?php echo dateToBE($objResult[date_s]); ?></td>
+	      <td align="center"><?php echo $objResult[device_name]; ?></td>
+	      <td align="center"><?php echo $objResult[problem]; ?></td>
+	      <td align="center"><?php echo $objResult[device_type_name]; ?></td>
+	      <td align="center"><?php echo $objResult[status_name]; ?></td>
 
     <? $i+=1 ; }?>
-
-      <!-- // echo "<script>alert('ไม่พบข้อมูลที่ต้องตรวจ!');history.back();</script>";
-      // exit(); -->
-  </table>
-  <br>
-  <br>
-
-  <?php echo "ข้อมูล ณ วันที่".DateThai(date("Y-m-d"))."";?>
+  </tr>
+</table>
+<table width="200" border="0">
+  <tbody>
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+<?php
+ $sql_name =  "SELECT * FROM admin where username ='".$_SESSION['user_admin']."' AND password ='".$_SESSION['pass_admin']."'";
+ $result_name = mysql_query($sql_name);
+ while ($row_name= mysql_fetch_array($result_name))
+			{
+ 				// echo "<strong>ผู้รายงานข้อมูล" ," : </strong>". $row_name['admin_name']." ".$row_name['admin_lname'];
+        echo "<strong>ข้อมูล ณ วันที่</strong>".DateThai(date("Y-m-d"))."";
+			}
+?>
+</div>
 </body>
 </html>
 <?Php
@@ -84,15 +100,4 @@ $pdf->SetDisplayMode('fullpage');
 $pdf->WriteHTML($html, 2);
 $pdf->Output();         // เก็บไฟล์ html ที่แปลงแล้วไว้ใน MyPDF/MyPDF.pdf ถ้าต้องการให้แสดง
 
-function DateThai($strDate)
-	{
-		$strYear = date("Y",strtotime($strDate))+543;
-		$strMonth= date("n",strtotime($strDate));
-		$strDay= date("j",strtotime($strDate));
-		$strHour= date("H",strtotime($strDate));
-		$strMonthCut = Array("","มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม");
-		$strMonthThai=$strMonthCut[$strMonth];
-		return " $strDay $strMonthThai $strYear";
-	}
 ?>
-<!--ดาวโหลดรายงานในรูปแบบ PDF <a href="MyPDF/MyPDF.pdf">คลิกที่นี้</a>-->

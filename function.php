@@ -49,5 +49,9 @@ function DateThai($strDate)
    return " $strDay $strMonthThai $strYear";
  }
 
- 
+function dateFormatDB($date){
+  $dateArr = explode("/",$date);
+  return ($dateArr[2]-543)."-".$dateArr[1]."-".$dateArr[0];
+
+}
 ?>

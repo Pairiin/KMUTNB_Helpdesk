@@ -159,6 +159,7 @@
 																									FROM satisfaction s
 																									LEFT JOIN detail_satisfaction dt ON s.id_satisfaction=dt.id_satisfaction
 																									LEFT JOIN question q ON dt.id_question=q.id_question
+																									LEFT JOIN point p ON dt.id_point=p.id_point
 																									WHERE s.id_repair=$_REQUEST[id_repair]";
 																			$objQuery = mysql_query($strSQL) or die ("Error Query [".$strSQL."]");
 																			$Num_Rows = mysql_num_rows($objQuery);
@@ -168,7 +169,7 @@
 																			?>
 																			<tr>
 																				<td><?=$i.". ".$result2['question_name'];?></td>
-																				<td width="70" align="center"><?=$result2['point']?></td>
+																				<td width="70" align="center"><?=$result2['point_name']?></td>
 																			</tr>
 																			<?
 																				$i++;

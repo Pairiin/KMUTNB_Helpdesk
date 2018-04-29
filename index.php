@@ -29,19 +29,6 @@
 body{
   background-color:#E0EEEE;
 }
-
-.navbar-default{
-  background-color:#1E90FF;
-}
-
-img {
-  height:40px;
-}
-
-.navbar-brand{
-  padding: 5px 5px;
-}
-
 </style>
 
 <body>

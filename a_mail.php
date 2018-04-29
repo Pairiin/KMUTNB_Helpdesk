@@ -23,8 +23,7 @@ $email_pass=$objResult_mail['email_password']; //email ผู้ส่ง
 $user_name=$result_detail['user_name']; //username
 $user_display=$result_detail['user_display']; //ชื่อ ผู้รับ
 
-$user_email = "5706021610029@fitm.kmutnb.ac.th";
-//$user_email=$_REQUEST['user_email']; //email ผู้รับ
+$user_email=$_REQUEST['user_email']; //email ผู้รับ
 
 //$exp_date = date_expirt(dateToday());
 
@@ -40,7 +39,8 @@ $objQuery_token = mysql_query($sql_token);
 $last_id = mysql_insert_id(); // คืนค่า id ที่ insert ล่าสุด
 
 
-
+// http://localhost/helpdesk_kmutnb/confirm_effect.php?token=$tokens
+$url = '<a href = "http://www.helpdesk-pcb.icit.kmutnb.ac.th/confirm_effect.php?token=$tokens">http://www.helpdesk-pcb.icit.kmutnb.ac.th/confirm_effect.php?token=$tokens</a>';
 $detail_mail = "
 รหัสใบแจ้งซ่อมที่ : $result_detail[id_repair] <br>
 รหัสการแจ้งซ่อมที่ : $result_detail[id_detail] <br><br>
@@ -52,7 +52,7 @@ Serial Number :  $result_detail[serial_number]<br><br>
 
 
 เนื่องจากการซ่อมได้มีผลกระทบ กับอุปกรณ์ของท่าน <br>
-กรุณากดเข้าสู่ระบบ และ กดยินยอมการซ่อม ในเมนู ตรวจสอบสถานะ หรือกด http://localhost/helpdesk_kmutnb/confirm_effect.php?token=$tokens ";
+กรุณากดเข้าสู่ระบบ และ กดยินยอมการซ่อม ในเมนู ตรวจสอบสถานะ หรือคลิกที่ ".$url;
 
 $mail = new PHPMailer(true);
 $mail->SMTPOptions = array(

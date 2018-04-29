@@ -9,11 +9,11 @@ $admin_lname=$_REQUEST['admin_lname'];
 $admin_phone=$_REQUEST['admin_phone'];
 $admin_email=$_REQUEST['admin_email'];
 $username=$_REQUEST['username'];
-$password=$_REQUEST['password']
+$password=$_REQUEST['password'];
 
 
 $sql = "INSERT INTO admin (admin_name,admin_lname,admin_phone,admin_email,username,password)
-VALUES ('$admin_name','$admin_lname','$admin_phone','$admin_email','$username','$username')";
+VALUES ('$admin_name','$admin_lname','$admin_phone','$admin_email','$username','$password')";
 
 $objQuery = mysql_query($sql);
 

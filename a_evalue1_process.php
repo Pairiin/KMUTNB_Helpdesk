@@ -21,7 +21,6 @@ function dateFormatDB($date){
 	$date_comple=dateFormatDB($date_comple);
 
 
-
 $evalue1 = ($get_job=='1' ? "รับ" : "ไม่รับ");
 
 $sql = "SELECT *

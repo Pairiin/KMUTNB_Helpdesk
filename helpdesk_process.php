@@ -91,7 +91,6 @@ if($objQuery_repair){
         });
     </script>
     <?
-
   }
   else
   {

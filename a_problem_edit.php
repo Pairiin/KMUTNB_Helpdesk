@@ -24,13 +24,10 @@
   <body class="sidebar-mini fixed">
     <div class="wrapper">
 
-			<?php include"connect.php";?>
-
-			<!-- header -->
-			<?php include"a_header.php";?>
-
-      <!-- Side-Nav-->
-			<?php include"a_side_nav.php";?>
+		<?php include "connect.php"; ?><!-- connect database -->
+		<?php include "a_header.php"; ?><!-- header -->
+		<?php include "a_side_nav.php"; ?><!-- Side-Nav-->
+		<?php include "function.php"; ?><!-- function-->
 
 			<div class="content-wrapper">
         <div class="page-title">

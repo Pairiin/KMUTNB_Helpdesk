@@ -22,3 +22,8 @@
 <!-- datePicker -->
 <script src="dist/js/bootstrap-datepicker-custom.js"></script>
 <script src="dist/locales/bootstrap-datepicker.th.min.js" charset="UTF-8"></script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>

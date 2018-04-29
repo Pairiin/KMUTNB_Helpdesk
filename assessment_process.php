@@ -51,7 +51,7 @@ for($i=1;$i<=5;$i++){
 	if($_REQUEST["point".$i] != ""){
 		// INSERT TABLE calendar
 		$strSQL2 = "INSERT INTO detail_satisfaction  ";
-		$strSQL2 .="(id_satisfaction,id_question,point) ";
+		$strSQL2 .="(id_satisfaction,id_question,id_point) ";
 		$strSQL2 .="VALUES ('".$id_satisfaction."','". $i ."','".$_REQUEST["point".$i]."')";
 		mysql_query($strSQL2);
 		}
